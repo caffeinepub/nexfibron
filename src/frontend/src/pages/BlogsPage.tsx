@@ -55,11 +55,12 @@ export default function BlogsPage() {
   const { actor } = useActor();
   const [selected, setSelected] = useState<BlogPost | null>(null);
 
-  const { data: blogs = sampleBlogs } = useQuery({
+  const { data: backendBlogs } = useQuery({
     queryKey: ["blogs"],
     queryFn: () => actor!.getPublishedBlogPosts(),
     enabled: !!actor,
   });
+  const blogs = backendBlogs?.length ? backendBlogs : sampleBlogs;
 
   if (selected) {
     return (

@@ -60,11 +60,12 @@ export default function ProductsPage() {
   const [orderProduct, setOrderProduct] = useState<Product | null>(null);
   const [filter, setFilter] = useState("all");
 
-  const { data: products = fallbackProducts } = useQuery({
+  const { data: backendProducts } = useQuery({
     queryKey: ["products"],
     queryFn: () => actor!.getAllProducts(),
     enabled: !!actor,
   });
+  const products = backendProducts?.length ? backendProducts : fallbackProducts;
 
   const displayed =
     filter === "all" ? products : products.filter((p) => p.category === filter);
